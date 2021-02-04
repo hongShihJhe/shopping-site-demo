@@ -1,0 +1,34 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace Carts.Models
+{
+    [Serializable] //序列化
+    public class CartItem
+    {
+        //商品編號
+        public int Id { get; set; }
+
+        //商品名稱
+        public string Name { get; set; }
+
+        //商品購買時價格
+        public decimal Price { get; set; }
+
+        //商品購買數量
+        public int Quantity { get; set; }
+
+        //商品圖片
+        public string DefaultImageURL { get; set; }
+
+        //商品小計
+        public decimal Amount {
+            get {
+                return Price * Quantity;
+            }
+        }
+
+    }
+}

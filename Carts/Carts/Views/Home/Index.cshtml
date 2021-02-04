@@ -1,0 +1,64 @@
+﻿
+@using Carts.Models
+@using Microsoft.AspNet.Identity
+@model List<Product>
+
+@{
+    ViewBag.Title = "購物首頁";
+    string UserId = User.Identity.GetUserId();
+    string UserName = User.Identity.Name;
+}
+
+<style>
+    .ProductImg {
+        height: 300px;
+    }
+</style>
+
+<div class="jumbotron">
+    <h2>IT鐵人購物網站 - 什麼都沒有，什麼都不奇怪</h2>
+    <h6>
+        <a href="@Url.Action("About", "Home")" class="btn btn-primary btn-lg">關於本站</a>
+    </h6>
+</div>
+
+<div class="row">
+    @foreach(Product product in this.Model)
+    {
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <img src="@product.DefaultImageURL" alt="商品圖片" class="ProductImg"/>
+                <div class="caption">
+                    <h3>@product.Name</h3>
+                    <p>@product.Description</p>
+                    <p>售價: @product.Price</p>
+                    <p>庫存: @product.Quantity</p>
+                    <p>
+                        <a href="javascript:void(0)" onclick="AddToCart(@product.Id)" class="btn btn-primary" role="button">加入購物車</a>
+                        <a href="@Url.Action("Details", new { id = product.Id })" class="btn btn-default" role="button">詳細資料</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+
+    @*<div class="col-md-4">
+        <h2>Getting started</h2>
+        <p>
+            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+            enables a clean separation of concerns and gives you full control over markup
+            for enjoyable, agile development.
+        </p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Get more libraries</h2>
+        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Web Hosting</h2>
+        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    </div>*@
+</div>

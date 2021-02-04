@@ -1,0 +1,38 @@
+﻿
+@model List<Carts.Models.Order>
+
+@{
+    ViewBag.Title = "訂單列表";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    //關聯的使用者名稱清單
+    List<string> userNameList = ViewBag.userNameList;
+}
+
+<h2>訂單列表</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>購買會員</th>
+            <th>收貨人姓名</th>
+            <th>收貨人電話</th>
+            <th>收貨人住址</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < this.Model.Count; i++)
+        {
+            <tr>
+                <td>@userNameList[i]</td>
+                <td>@this.Model[i].ReceiverName</td>
+                <td>@this.Model[i].ReceiverPhone</td>
+                <td>@this.Model[i].ReceiverPhone</td>
+                <td>
+                    <a href="@Url.Action("Detail", new { id = this.Model[i].Id })" class="btn btn-default">商品明細</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

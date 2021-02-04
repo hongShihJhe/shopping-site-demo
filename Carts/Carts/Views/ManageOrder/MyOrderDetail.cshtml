@@ -1,0 +1,33 @@
+﻿@model  List<Carts.Models.OrderDetail>
+
+@{
+    ViewBag.Title = "商品明細";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@String.Format("訂單編號{0} - 商品列表", this.Model.First().Id)</h2>
+
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-default">回到訂單列表</a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>商品名稱</th>
+            <th>商品價格</th>
+            <th>購買數量</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var orderDetail in this.Model)
+        {
+            <tr>
+                <td>@orderDetail.Name</td>
+                <td>@orderDetail.Price</td>
+                <td>@orderDetail.Quantity</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

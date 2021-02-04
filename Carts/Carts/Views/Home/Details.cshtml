@@ -1,0 +1,104 @@
+﻿@model Carts.Models.Product
+@using Carts.Models;
+
+@{
+    ViewBag.Title = "商品資訊";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    //商品評論
+    List<ProductComment> productComments;
+    using (CartsEntities db = new CartsEntities())
+    {
+        productComments = (from s in db.ProductComments where s.ProductId == this.Model.Id select s).ToList();
+    }
+
+    //
+    List<string> userIds = productComments.Select(s => s.UserId).ToList();
+    List<string> userNames = Utils.GetUserNames(userIds);
+
+}
+
+<h2>商品資訊</h2>
+
+<div>
+    @*<h4>Product</h4>*@
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt></dt>
+        <dd>
+            <img src="@this.Model.DefaultImageURL" height="300" />
+        </dd>
+
+        @* 加一點空白 *@
+        <div class="h4"></div>
+
+        <dt>
+            名稱
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            描述
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            售價
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            庫存數量
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+    </dl>
+
+</div>
+
+<h3>商品評價</h3>
+@for (int i = 0; i < productComments.Count; i++)
+{
+    <p>
+        <span style="font-weight: bold ">@userNames[i]: </span>
+        <span>@productComments[i].Content</span>
+    </p>
+}
+
+
+
+@using (Html.BeginForm("AddComment", "Home"))
+{
+    @Html.Hidden("productId", this.Model.Id)
+    @Html.TextBox("commentContent")
+    <input name="postComment" type="submit" value="留言" class="btn btn-default" />
+}
+<script type="text/javascript">
+    //點擊提交留言
+    $('[name="postComment"]').click(function (e) {
+        //留言內容
+        let commentContent = $('[name="commentContent"]').val()
+
+        //如果留言為空，阻止提交
+        if (!commentContent) {
+            alert('請輸入留言! ')
+            return false;
+        }
+    })
+</script>
+<p>
+    <a href="@Url.Action("Index")" class="btn btn-default">回首頁</a>
+</p>
+
